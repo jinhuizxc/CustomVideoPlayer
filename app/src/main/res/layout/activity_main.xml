@@ -13,7 +13,9 @@
             android:layout_width="match_parent"
             android:layout_height="250dp" />
 
+         <!--控制亮度/声音的布局-->
         <include layout="@layout/include_layout" />
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -51,7 +53,6 @@
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="16dp"
                         android:layout_marginStart="16dp"
                         android:contentDescription="@string/app_name"
                         android:src="@drawable/pause_btn_sylte" />
@@ -61,7 +62,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="32dp"
                         android:layout_marginStart="32dp"
                         android:text="@string/play_time"
                         android:textColor="#ffff"
@@ -71,7 +71,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="5dp"
                         android:layout_marginStart="5dp"
                         android:text="@string/play_separate"
                         android:textColor="#4c4c4c"
@@ -82,7 +81,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="5dp"
                         android:layout_marginStart="5dp"
                         android:text="@string/play_time"
                         android:textColor="#4c4c4c"
@@ -93,11 +91,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginLeft="10dp"
                     android:layout_marginStart="10dp"
                     android:layout_toEndOf="@id/control_layout"
-                    android:layout_toRightOf="@id/control_layout"
                     android:gravity="center_vertical|end"
                     android:orientation="horizontal">
 
@@ -112,8 +107,6 @@
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="10dp"
-                        android:layout_marginLeft="6dp"
-                        android:layout_marginRight="10dp"
                         android:layout_marginStart="6dp"
                         android:indeterminate="false"
                         android:max="100"
@@ -129,7 +122,6 @@
                         android:layout_width="1dp"
                         android:layout_height="match_parent"
                         android:layout_marginEnd="10dp"
-                        android:layout_marginRight="10dp"
                         android:background="#1e1e1e" />
 
                     <ImageView
@@ -137,7 +129,6 @@
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_marginEnd="10dp"
-                        android:layout_marginRight="10dp"
                         android:contentDescription="@string/app_name"
                         android:src="@drawable/enlarge" />
                 </LinearLayout>

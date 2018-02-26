@@ -16,6 +16,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
 //    private VideoView videoView;
     private static String URL = "http://fairee.vicp.net:83/2016rm/0116/baishi160116.mp4";
     private static int UPDATE = 0;
+    private static int UPDATE_Light = 1;
     private CustomVideoView videoView;
     private ImageView imgPlayControl; //暂停
     private SeekBar seekProgress; //进度条
@@ -135,6 +137,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 updateFormatTime(txtCurrTime, progress);
+                // 更新视频界面
+                int progress1 = seekBar.getProgress();
+                videoView.seekTo(progress1);
             }
 
             @Override
@@ -295,6 +300,7 @@ public class MainActivity extends AppCompatActivity {
      * @param brightness
      */
     public void setBrightness(float brightness) {
+
         WindowManager.LayoutParams lp = getWindow().getAttributes();
 
         lp.screenBrightness = lp.screenBrightness + brightness / 255.0f; //当前亮度+ 滑动值/255
@@ -334,6 +340,12 @@ public class MainActivity extends AppCompatActivity {
         Uri uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.baishi);
         videoView.setVideoURI(uri);
         videoView.start();
+//        //获取视频当前的播放时间
+//        currPosition = videoView.getCurrentPosition();
+//        Log.e(TAG, "currPosition = " + currPosition);  // currPosition = 0;
+//        //获取视频的总时间
+//        int totalDuration = videoView.getDuration();
+//        Log.e(TAG, "获取视频的总时间 = " + totalDuration); // 获取视频的总时间 = -1
         handler.sendEmptyMessage(UPDATE);
     }
 
@@ -355,7 +367,7 @@ public class MainActivity extends AppCompatActivity {
                 updateFormatTime(txtTotalTime, totalDuration);
                 seekProgress.setMax(totalDuration);
                 seekProgress.setProgress(currPosition);
-                handler.sendEmptyMessageDelayed(UPDATE, 500);
+                handler.sendEmptyMessageDelayed(UPDATE, 500);// 设置1000ms时间到14秒就停止了，将时间设置500ms
             }
         }
     };
@@ -363,11 +375,12 @@ public class MainActivity extends AppCompatActivity {
     /**
      * 更新TextView的时间
      *
-     * @param textView    文本框
-     * @param millisecond 时间
+     * @param txtCurrTime    文本框
+     * @param currPosition 时间
      */
-    private void updateFormatTime(TextView textView, int millisecond) {
-        int second = millisecond / 1000;
+    @SuppressLint("DefaultLocale")
+    private void updateFormatTime(TextView txtCurrTime, int currPosition) {
+        int second = currPosition / 1000;
         int hh = second / 3600;
         int mm = second % 3600 / 60;
         int ss = second % 60;
@@ -377,7 +390,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             time = String.format("%02d:%02d", mm, ss);
         }
-        textView.setText(time);
+        txtCurrTime.setText(time);
     }
 
     private void initView() {
@@ -435,7 +448,7 @@ public class MainActivity extends AppCompatActivity {
         layoutParams.width = width;
         layoutParams.height = height;
         videoView.setLayoutParams(layoutParams);
-
+        // 同时需要设置外层布局
         ViewGroup.LayoutParams layoutParams1 = videoLayout.getLayoutParams();
         layoutParams1.width = width;
         layoutParams1.height = height;
